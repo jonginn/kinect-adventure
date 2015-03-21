@@ -41,6 +41,22 @@
             ],
             playerNumber: 4,
         },
+        {
+            color: 'pink',
+            role: 'sounds',
+            sounds: [
+                '9', '10', '11', '12'
+            ],
+            playerNumber: 5,
+        },
+        {
+            color: 'yellow',
+            role: 'bass',
+            sounds: [
+                '3', '4', '5', '6'
+            ],
+            playerNumber: 6,
+        },
     ];
 
     var currentSounds = [false,false,false,false];
