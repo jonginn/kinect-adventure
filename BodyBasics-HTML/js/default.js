@@ -8,16 +8,79 @@
         reader,
         bodies;
 
-    var playerColors = [
-        'blue', 'red', 'purple'
+    var player = [
+        {
+            color: 'blue',
+            role: 'drums',
+            sounds: [
+                '1', '2', '3', '4'
+            ],
+            playerNumber: 1,
+        },
+        {
+            color: 'red',
+            role: 'bass',
+            sounds: [
+                '1', '2', '3', '4'
+            ],
+            playerNumber: 2,
+        },
+        {
+            color: 'purple',
+            role: 'sounds',
+            sounds: [
+                '1', '2', '3', '4'
+            ],
+            playerNumber: 3,
+        },
+        {
+            color: 'green',
+            role: 'sounds',
+            sounds: [
+                '5', '6', '7', '8'
+            ],
+            playerNumber: 4,
+        },
     ];
 
-    function drawFirstBody(sensor, ctx, bodies) {
+    var currentSounds = [false,false,false,false];
+
+function playSound(playerData, headPosition, leftHandPosition, rightHandPosition) {
+    var role = playerData.role;
+    var sounds = playerData.sounds, setSound;
+
+    var l = leftHandPosition.y;
+    var r = rightHandPosition.y;
+    var h = headPosition.y;
+
+    if ((l > h) && (r > h)) {
+        // both hands up
+        setSound = playerData.sounds[0];
+    } else if ((l <= h) && (r > h)) {
+        // right hand up
+        setSound = playerData.sounds[1];
+    } else if ((l > h) && (r <= h)) {
+        // left hand up
+        setSound = playerData.sounds[2];
+    } else if ((l <= h) && (r <= h)) {
+        // both hands down
+        setSound = playerData.sounds[3];
+    }
+
+    var debug = document.getElementById("player" + playerData.color + "status");
+    debug.innerHTML = playerData.color + ": " + setSound;
+}
+
+    function drawPlayers(sensor, ctx, bodies) {
         var currentBody,
             handLeft,
             handRight,
             head,
-            colSpacePosition;
+            colSpacePosition,
+            trackingSize = 50,
+            headPosition,
+            leftHandPosition,
+            rightHandPosition;
 
         var trackedBodies = bodies.filter(function (b) { return (b.isTracked); });
 
@@ -31,13 +94,15 @@
                 handRight = currentBody.joints.lookup(sdk.JointType.handRight);
                 head = currentBody.joints.lookup(sdk.JointType.head);
 
-                ctx.fillStyle = playerColors[i];
-                colSpacePosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handLeft.position);
-                ctx.fillRect(colSpacePosition.x, colSpacePosition.y, 100, 100);
-                colSpacePosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handRight.position);
-                ctx.fillRect(colSpacePosition.x, colSpacePosition.y, 100, 100);
-                colSpacePosition = sensor.coordinateMapper.mapCameraPointToColorSpace(head.position);
-                ctx.fillRect(colSpacePosition.x, colSpacePosition.y, 100, 100);
+                ctx.fillStyle = player[i].color;
+                leftHandPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handLeft.position);
+                ctx.fillRect(leftHandPosition.x, leftHandPosition.y, trackingSize, trackingSize);
+                rightHandPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handRight.position);
+                ctx.fillRect(rightHandPosition.x, rightHandPosition.y, trackingSize, trackingSize);
+                headPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(head.position);
+                ctx.fillRect(headPosition.x, headPosition.y, trackingSize, trackingSize);
+
+                playSound(player[i], headPosition, leftHandPosition, rightHandPosition);
             }
         }
     }
@@ -54,7 +119,7 @@
                 var bodyFrame = args.frameReference.acquireFrame();
                 if (bodyFrame) {
                     bodyFrame.getAndRefreshBodyData(bodies);
-                    drawFirstBody(sensor, ctx, bodies);
+                    drawPlayers(sensor, ctx, bodies);
                     bodyFrame.close();
                 }
             });

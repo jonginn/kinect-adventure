@@ -31,6 +31,7 @@ canvas {
     left: 20px;
     color: grey;
     z-index: 4000;
+    font-size: 40px;
 }
 
 input#snapshotbutton {
