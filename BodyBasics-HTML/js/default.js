@@ -59,9 +59,23 @@
         },
     ];
 
-    var currentSounds = [false,false,false,false];
+    var currentSounds = [-1, -1, -1, -1, -1, -1], targetAudio, targetSrc, targetPlayer;
 
-function playSound(playerData, headPosition, leftHandPosition, rightHandPosition) {
+    function playSounds() {
+        // every loop stop playing and check what's set
+
+        for (var s = 0; s < currentSounds.length; s++) {
+            if(currentSounds[s] > -1) {
+                targetAudio = document.getElementById("player" + (s+1) + "audio");
+                targetPlayer = player[s];
+                targetSrc = "/music/" + targetPlayer.role + "." + currentSounds[s] + ".mp3";
+                targetAudio.src = targetSrc;
+                targetAudio.play();
+            }
+        }
+    }
+
+function setSound(playerData, headPosition, leftHandPosition, rightHandPosition) {
     var role = playerData.role;
     var sounds = playerData.sounds, setSound;
 
@@ -83,8 +97,10 @@ function playSound(playerData, headPosition, leftHandPosition, rightHandPosition
         setSound = playerData.sounds[3];
     }
 
-    var debug = document.getElementById("player" + playerData.color + "status");
-    debug.innerHTML = playerData.color + ": " + setSound;
+    currentSounds[playerData.playerNumber - 1] = setSound;
+
+    var debug = document.getElementById("nowplaying");
+    debug.innerHTML = currentSounds.toString();
 }
 
     function drawPlayers(sensor, ctx, bodies) {
@@ -118,7 +134,7 @@ function playSound(playerData, headPosition, leftHandPosition, rightHandPosition
                 headPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(head.position);
                 ctx.fillRect(headPosition.x, headPosition.y, trackingSize, trackingSize);
 
-                playSound(player[i], headPosition, leftHandPosition, rightHandPosition);
+                setSound(player[i], headPosition, leftHandPosition, rightHandPosition);
             }
         }
     }

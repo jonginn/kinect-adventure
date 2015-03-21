@@ -31,7 +31,7 @@ canvas {
     left: 20px;
     color: grey;
     z-index: 4000;
-    font-size: 40px;
+    font-size: 70px;
 }
 
 input#snapshotbutton {
@@ -41,21 +41,9 @@ input#snapshotbutton {
     border: 1px solid #000000;
 }
 
-input#snapshotbutton:hover, input#snapshotbutton:focus {
-    background-color: #696868;
-    -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
-    -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
-    box-shadow: 0 0 1px rgba(0,0,0, .75);
-}
-
-@media screen and (-ms-view-state: fullscreen-landscape) {
-}
-
-@media screen and (-ms-view-state: filled) {
-}
-
-@media screen and (-ms-view-state: snapped) {
-}
-
-@media screen and (-ms-view-state: fullscreen-portrait) {
-}
+    input#snapshotbutton:hover, input#snapshotbutton:focus {
+        background-color: #696868;
+        -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+        -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+        box-shadow: 0 0 1px rgba(0,0,0, .75);
+    }
