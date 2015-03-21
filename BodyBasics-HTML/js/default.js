@@ -9,6 +9,8 @@
 
     WinJS.Binding.optimizeBindingReferences = true;
 
+    console.log('setting up');
+
     var app = WinJS.Application;
     var activation = Windows.ApplicationModel.Activation;
     var streams = Windows.Storage.Streams;
@@ -300,6 +302,7 @@
             document.getElementById("statustext").innerHTML = "Running";
         }
         else {
+            console.log('Kinect not available.');
             document.getElementById("statustext").innerHTML = "Kinect not available!";
         }
     }
@@ -334,8 +337,8 @@
 
                 // get canvas objects
                 bodyCanvas = document.getElementById("mainCanvas");
-                bodyCanvas.width = depthFrameDescription.width;;
-                bodyCanvas.height = depthFrameDescription.height;;
+                bodyCanvas.width = depthFrameDescription.width;
+                bodyCanvas.height = depthFrameDescription.height;
                 bodyContext = bodyCanvas.getContext("2d");
 
                 // set body colors for each unique body
