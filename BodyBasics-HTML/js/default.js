@@ -10,7 +10,7 @@
 
     var player = [
         {
-            color: 'blue',
+            color: '#2C64C4',
             role: 'drums',
             sounds: [
                 '1', '2', '3', '4'
@@ -18,7 +18,7 @@
             playerNumber: 1,
         },
         {
-            color: 'red',
+            color: '#D4214F',
             role: 'bass',
             sounds: [
                 '1', '2', '3', '4'
@@ -26,7 +26,7 @@
             playerNumber: 2,
         },
         {
-            color: 'purple',
+            color: '#0AFDCC',
             role: 'sounds',
             sounds: [
                 '1', '2', '3', '4'
@@ -34,7 +34,7 @@
             playerNumber: 3,
         },
         {
-            color: 'green',
+            color: '#f8e9db',
             role: 'sounds',
             sounds: [
                 '5', '6', '7', '8'
@@ -42,7 +42,7 @@
             playerNumber: 4,
         },
         {
-            color: 'pink',
+            color: 'purple',
             role: 'sounds',
             sounds: [
                 '9', '10', '11', '12'
@@ -95,13 +95,24 @@
    function muteAll() {
         var audioElements = document.getElementsByTagName('audio');
         for (var a = 0; a < audioElements.length; a++) {
+            if (typeof audioElements[a].loop == 'boolean')
+                {
+                    audioElements[a].loop = true;
+                }
+                else
+                {
+                    audioElements[a].addEventListener('ended', function () {
+                        this.currentTime = 0;
+                        this.play();
+                    }, false);
+                }
             audioElements[a].pause();
         }
     }
 
     // function to fade volume
 
-    var audioLength = 4000;
+    var audioLength = 8000;
     function switchTracks() {
         muteAll();
         for (var s = 0; s < currentSounds.length; s++) {
@@ -147,7 +158,7 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
             handRight,
             head,
             colSpacePosition,
-            trackingSize = 50,
+            trackingSize = 50, trackingSizeSmaller = 40,
             headPosition,
             leftHandPosition,
             rightHandPosition;
@@ -166,12 +177,12 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
 
                 ctx.fillStyle = player[i].color;
                 leftHandPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handLeft.position);
-                ctx.fillRect(leftHandPosition.x, leftHandPosition.y, trackingSize, trackingSize);
+                ctx.fillRect(leftHandPosition.x, leftHandPosition.y, trackingSizeSmaller, trackingSizeSmaller);
                 rightHandPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(handRight.position);
-                ctx.fillRect(rightHandPosition.x, rightHandPosition.y, trackingSize, trackingSize);
+                ctx.fillRect(rightHandPosition.x, rightHandPosition.y, trackingSizeSmaller, trackingSizeSmaller);
                 headPosition = sensor.coordinateMapper.mapCameraPointToColorSpace(head.position);
                 ctx.fillRect(headPosition.x, headPosition.y, trackingSize, trackingSize);
-
+                
                 setSound(player[i], headPosition, leftHandPosition, rightHandPosition);
             }
         }
