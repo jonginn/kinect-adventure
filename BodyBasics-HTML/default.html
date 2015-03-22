@@ -12,20 +12,17 @@
 </head>
 <body>
 
-    <audio id="player1audio" autoplay="autoplay" loop="loop" msAudioCategory="GameMedia" src="/music/bass.1.mp3">
-        Not supported
+    <audio controls="controls" autoplay="autoplay" id="player1audio">
+        <source src="music/bass-1.mp3" type="audio/mpeg" id="player1audio-source" />
     </audio>
-
     <div class="wrapper">
-
-    <div id="canvasContainer">
-        <canvas id="myCanvas" class="canvas" width="1920" height="1080"></canvas>
-    </div>
+        <div id="canvasContainer">
+            <canvas id="myCanvas" class="canvas" width="1920" height="1080"></canvas>
+        </div>
             
         <div class="debug">
             <p id="nowplaying"></p>
         </div>
-
     </div>
     <script src="/js/default.js"></script>
 </body>

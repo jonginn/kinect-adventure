@@ -65,14 +65,17 @@
         // every X seconds (every loop) updated all the audio loops and adjust volume based on who is visible
 
         for (var s = 0; s < currentSounds.length; s++) {
+            targetID = "player" + (s + 1) + "audio";
+            targetAudio = document.getElementById(targetID);
+
             if (currentSounds[s] > -1) {
-                targetID = "player" + (s + 1) + "audio";
-                targetAudio = document.getElementById(targetID);
-                //targetAudioSource = document.getElementById(targetID + "-source");
+                targetAudioSource = document.getElementById(targetID + "-source");
                 targetPlayer = player[s];
-                targetSrc = "/music/" + targetPlayer.role + "." + currentSounds[s] + ".mp3";
-                targetAudio.src = targetSrc;
-                targetAudio.play();
+                targetSrc = "/music/" + targetPlayer.role + "-" + currentSounds[s] + ".mp3";
+                targetAudioSource.src = targetSrc;
+                targetAudio.volume = 1;
+            } else {
+                targetAudio.volume = 0;
             }
         }
     }
@@ -159,8 +162,8 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
             });
         }
 
-        var audioEl = document.getElementById('player1audio');
-        audioEl.play();
+       // var audioEl = document.getElementById('player1audio');
+        //audioEl.play();
     };
 
     app.start();

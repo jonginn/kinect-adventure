@@ -52,30 +52,10 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="js\default.js" />
-    <Content Include="music\bass.1.1.ogg" />
-    <Content Include="music\bass.1.2.ogg" />
-    <Content Include="music\bass.1.3.ogg" />
-    <Content Include="music\bass.1.4.ogg" />
-    <Content Include="music\bass.1.5.ogg" />
-    <Content Include="music\bass.1.6.ogg" />
-    <Content Include="music\drum.1.1.ogg" />
-    <Content Include="music\drum.1.2.ogg" />
-    <Content Include="music\drum.1.3.ogg" />
-    <Content Include="music\drum.1.4.ogg" />
-    <Content Include="music\drum.1.5.ogg" />
-    <Content Include="music\drum.1.6.ogg" />
-    <Content Include="music\sounds.1.1.ogg" />
-    <Content Include="music\sounds.1.10.ogg" />
-    <Content Include="music\sounds.1.11.ogg" />
-    <Content Include="music\sounds.1.12.ogg" />
-    <Content Include="music\sounds.1.2.ogg" />
-    <Content Include="music\sounds.1.3.ogg" />
-    <Content Include="music\sounds.1.4.ogg" />
-    <Content Include="music\sounds.1.5.ogg" />
-    <Content Include="music\sounds.1.6.ogg" />
-    <Content Include="music\sounds.1.7.ogg" />
-    <Content Include="music\sounds.1.8.ogg" />
-    <Content Include="music\sounds.1.9.ogg" />
+    <Content Include="music\bass-1.mp3" />
+    <Content Include="music\bass-2.mp3" />
+    <Content Include="music\bass-3.mp3" />
+    <Content Include="music\bass-4.mp3" />
     <None Include="BodyBasics-HTML_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
