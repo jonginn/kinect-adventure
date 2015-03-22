@@ -61,28 +61,39 @@
 
     var currentSounds = [-1, -1, -1, -1, -1, -1], targetAudio, targetSrc, targetPlayer, targetID, targetAudioSource;
 
-    function playSounds() {
-        // every X seconds (every loop) updated all the audio loops and adjust volume based on who is visible
+   function muteAll() {
+        var audioElements = document.getElementsByTagName('audio');
+        for (var a = 0; a < audioElements.length; a++) {
+            audioElements[a].pause();
+        }
+    }
 
+    // function to fade volume
+
+    var audioLength = 4000;
+    function switchTracks() {
+        //muteAll();
         for (var s = 0; s < currentSounds.length; s++) {
             targetID = "player" + (s + 1) + "audio";
             targetAudio = document.getElementById(targetID);
+            targetAudio.pause();
 
             if (currentSounds[s] > -1) {
                 targetAudioSource = document.getElementById(targetID + "-source");
                 targetPlayer = player[s];
-                targetSrc = "/music/" + targetPlayer.role + "-" + currentSounds[s] + ".mp3";
-                targetAudioSource.src = targetSrc;
+                targetSrc = "/music/" + targetPlayer.role + ".1." + currentSounds[s] + ".mp3";
+                targetAudio.src = targetSrc;
                 targetAudio.volume = 1;
+                targetAudio.play();
             } else {
-                targetAudio.volume = 0;
+                targetAudio.pause();
             }
         }
     }
 
 function setSound(playerData, headPosition, leftHandPosition, rightHandPosition) {
     var role = playerData.role;
-    var sounds = playerData.sounds, setSound;
+    var sounds = playerData.sounds, soundToPlay;
 
     var l = leftHandPosition.y;
     var r = rightHandPosition.y;
@@ -90,24 +101,23 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
 
     if ((l > h) && (r > h)) {
         // both hands up
-        setSound = playerData.sounds[0];
+        soundToPlay = playerData.sounds[0];
     } else if ((l <= h) && (r > h)) {
         // right hand up
-        setSound = playerData.sounds[1];
+        soundToPlay = playerData.sounds[1];
     } else if ((l > h) && (r <= h)) {
         // left hand up
-        setSound = playerData.sounds[2];
+        soundToPlay = playerData.sounds[2];
     } else if ((l <= h) && (r <= h)) {
         // both hands down
-        setSound = playerData.sounds[3];
+        soundToPlay = playerData.sounds[3];
     }
 
-    currentSounds[playerData.playerNumber - 1] = setSound;
+    currentSounds[playerData.playerNumber - 1] = soundToPlay;
 
     var debug = document.getElementById("nowplaying");
     debug.innerHTML = currentSounds.toString();
 }
-
     function drawPlayers(sensor, ctx, bodies) {
         var currentBody,
             handLeft,
@@ -152,6 +162,8 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
             sensor.open();
             bodies = new Array(sensor.bodyFrameSource.bodyCount);
             reader = sensor.bodyFrameSource.openReader();
+            //muteAll();
+            window.setInterval(switchTracks, audioLength);
             reader.addEventListener('framearrived', function (args) {
                 var bodyFrame = args.frameReference.acquireFrame();
                 if (bodyFrame) {
