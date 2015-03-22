@@ -59,6 +59,37 @@
         },
     ];
 
+    var bassNumbers = 6, bassElements = [];
+    var drumNumbers = 6, drumElements = [];
+    var soundNumbers = 12, soundElements = [];
+    var tempElement;
+
+    var theContainer = document.getElementById("audio-container");
+
+    function createAudioElements() {
+        for (var x = 0; x < (bassNumbers - 1); x++) {
+            tempElement = document.createElement("audio");
+            tempElement.src = "music/bass.1." + (x + 1) + ".mp3";
+            tempElement.id = "bass-" + (x + 1);
+            theContainer.appendChild(tempElement);
+            bassElements.push(tempElement);
+        }
+        for (var x = 0; x < (drumNumbers - 1); x++) {
+            tempElement = document.createElement("audio");
+            tempElement.src = "music/drum.1." + (x + 1) + ".mp3";
+            tempElement.id = "drums-" + (x + 1);
+            theContainer.appendChild(tempElement);
+            drumElements.push(tempElement);
+        }
+        for (var x = 0; x < (soundNumbers - 1); x++) {
+            tempElement = document.createElement("audio");
+            tempElement.src = "music/sounds.1." + (x + 1) + ".mp3";
+            tempElement.id = "sounds-" + (x + 1);
+            theContainer.appendChild(tempElement);
+            soundElements.push(tempElement);
+        }
+    }
+
     var currentSounds = [-1, -1, -1, -1, -1, -1], targetAudio, targetSrc, targetPlayer, targetID, targetAudioSource;
 
    function muteAll() {
@@ -72,21 +103,13 @@
 
     var audioLength = 4000;
     function switchTracks() {
-        //muteAll();
+        muteAll();
         for (var s = 0; s < currentSounds.length; s++) {
-            targetID = "player" + (s + 1) + "audio";
-            targetAudio = document.getElementById(targetID);
-            targetAudio.pause();
-
             if (currentSounds[s] > -1) {
-                targetAudioSource = document.getElementById(targetID + "-source");
                 targetPlayer = player[s];
-                targetSrc = "/music/" + targetPlayer.role + ".1." + currentSounds[s] + ".mp3";
-                targetAudio.src = targetSrc;
-                targetAudio.volume = 1;
+                targetID = targetPlayer.role + "-" + currentSounds[s];
+                targetAudio = document.getElementById(targetID);
                 targetAudio.play();
-            } else {
-                targetAudio.pause();
             }
         }
     }
@@ -155,6 +178,7 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
     }
 
     app.onactivated = function (args) {
+        createAudioElements();
         if (args.detail.kind === activation.ActivationKind.launch) {
             var canvas = document.getElementById('myCanvas');
             var ctx = canvas.getContext('2d');
@@ -163,6 +187,7 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
             bodies = new Array(sensor.bodyFrameSource.bodyCount);
             reader = sensor.bodyFrameSource.openReader();
             //muteAll();
+            switchTracks();
             window.setInterval(switchTracks, audioLength);
             reader.addEventListener('framearrived', function (args) {
                 var bodyFrame = args.frameReference.acquireFrame();
@@ -173,9 +198,6 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
                 }
             });
         }
-
-       // var audioEl = document.getElementById('player1audio');
-        //audioEl.play();
     };
 
     app.start();
