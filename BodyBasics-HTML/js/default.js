@@ -71,22 +71,31 @@
             tempElement = document.createElement("audio");
             tempElement.src = "music/bass.1." + (x + 1) + ".mp3";
             tempElement.id = "bass-" + (x + 1);
+            tempElement.loop = true;
+            tempElement.volume = 0;
             theContainer.appendChild(tempElement);
             bassElements.push(tempElement);
+            tempElement.play();
         }
         for (var x = 0; x < (drumNumbers - 1); x++) {
             tempElement = document.createElement("audio");
             tempElement.src = "music/drum.1." + (x + 1) + ".mp3";
             tempElement.id = "drums-" + (x + 1);
+            tempElement.loop = true;
+            tempElement.volume = 0;
             theContainer.appendChild(tempElement);
             drumElements.push(tempElement);
+            tempElement.play();
         }
         for (var x = 0; x < (soundNumbers - 1); x++) {
             tempElement = document.createElement("audio");
             tempElement.src = "music/sounds.1." + (x + 1) + ".mp3";
             tempElement.id = "sounds-" + (x + 1);
+            tempElement.loop = true;
+            tempElement.volume = 0;
             theContainer.appendChild(tempElement);
             soundElements.push(tempElement);
+            tempElement.play();
         }
     }
 
@@ -106,7 +115,7 @@
                         this.play();
                     }, false);
                 }
-            audioElements[a].pause();
+            audioElements[a].volume = 0;
         }
     }
 
@@ -120,7 +129,7 @@
                 targetPlayer = player[s];
                 targetID = targetPlayer.role + "-" + currentSounds[s];
                 targetAudio = document.getElementById(targetID);
-                targetAudio.play();
+                targetAudio.volume = 1;
             }
         }
     }
