@@ -65,6 +65,7 @@
     var tempElement;
 
     var theContainer = document.getElementById("audio-container");
+    var timeLeft = document.getElementById("timeLeft");
 
     function createAudioElements() {
         for (var x = 0; x < (bassNumbers - 1); x++) {
@@ -123,6 +124,7 @@
 
     var audioLength = 8000;
     function switchTracks() {
+        timeLeft.innerHTML = "8";
         muteAll();
         for (var s = 0; s < currentSounds.length; s++) {
             if (currentSounds[s] > -1) {
@@ -132,6 +134,11 @@
                 targetAudio.volume = 1;
             }
         }
+    }
+
+    function countDown() {
+        var current = parseInt(timeLeft.innerHTML, 10);
+        timeLeft.innerHTML = current - 1;
     }
 
 function setSound(playerData, headPosition, leftHandPosition, rightHandPosition) {
@@ -209,6 +216,7 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
             //muteAll();
             switchTracks();
             window.setInterval(switchTracks, audioLength);
+            window.setInterval(countDown, 1000);
             reader.addEventListener('framearrived', function (args) {
                 var bodyFrame = args.frameReference.acquireFrame();
                 if (bodyFrame) {

@@ -6,6 +6,17 @@
     background-size: cover;
 }
 
+#timeLeft {
+    font-size: 120px;
+    position:absolute;
+    top: 50%;
+    left: 0;
+    font-family: 'Mistral', serif;
+    margin-top: -60px;
+    width: 100%;
+    text-align: center;
+}
+
 #apptext {
     float: right;
     text-align: right;
