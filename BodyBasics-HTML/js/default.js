@@ -59,14 +59,16 @@
         },
     ];
 
-    var currentSounds = [-1, -1, -1, -1, -1, -1], targetAudio, targetSrc, targetPlayer;
+    var currentSounds = [-1, -1, -1, -1, -1, -1], targetAudio, targetSrc, targetPlayer, targetID, targetAudioSource;
 
     function playSounds() {
-        // every loop stop playing and check what's set
+        // every X seconds (every loop) updated all the audio loops and adjust volume based on who is visible
 
         for (var s = 0; s < currentSounds.length; s++) {
-            if(currentSounds[s] > -1) {
-                targetAudio = document.getElementById("player" + (s+1) + "audio");
+            if (currentSounds[s] > -1) {
+                targetID = "player" + (s + 1) + "audio";
+                targetAudio = document.getElementById(targetID);
+                //targetAudioSource = document.getElementById(targetID + "-source");
                 targetPlayer = player[s];
                 targetSrc = "/music/" + targetPlayer.role + "." + currentSounds[s] + ".mp3";
                 targetAudio.src = targetSrc;
@@ -156,6 +158,9 @@ function setSound(playerData, headPosition, leftHandPosition, rightHandPosition)
                 }
             });
         }
+
+        var audioEl = document.getElementById('player1audio');
+        audioEl.play();
     };
 
     app.start();

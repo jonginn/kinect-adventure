@@ -9,9 +9,13 @@
     <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
     <link href="/css/default.css" rel="stylesheet" />
-    <script src="/js/default.js"></script>
 </head>
 <body>
+
+    <audio id="player1audio" autoplay="autoplay" loop="loop" msAudioCategory="GameMedia" src="/music/bass.1.mp3">
+        Not supported
+    </audio>
+
     <div class="wrapper">
 
     <div id="canvasContainer">
@@ -23,9 +27,6 @@
         </div>
 
     </div>
-
-    <audio id="player1audio" autoplay="autoplay">
-        <source src="/music/bass.1.mp3" type='audio/mpeg; codecs="mp3"'></source>
-    </audio>
+    <script src="/js/default.js"></script>
 </body>
 </html>
